@@ -1,0 +1,13 @@
+D:\Programming\OnionArchitectFramework\SuitSupply.DomainModel\bin\Debug\Framework.DomainModel.dll
+D:\Programming\OnionArchitectFramework\SuitSupply.DomainModel\bin\Debug\Framework.DomainModel.pdb
+D:\Programming\OnionArchitectFramework\SuitSupply.DomainModel\obj\Debug\Framework.DomainModel.dll
+D:\Programming\OnionArchitectFramework\SuitSupply.DomainModel\obj\Debug\Framework.DomainModel.pdb
+D:\Programming\OnionArchitectFramework\Framework.DomainModel\bin\Debug\Framework.DomainModel.dll
+D:\Programming\OnionArchitectFramework\Framework.DomainModel\bin\Debug\Framework.DomainModel.pdb
+D:\Programming\OnionArchitectFramework\Framework.DomainModel\obj\Debug\Framework.DomainModel.dll
+D:\Programming\OnionArchitectFramework\Framework.DomainModel\obj\Debug\Framework.DomainModel.pdb
+D:\Programming\GitHub\Framework\Framework.DomainModel\bin\Debug\Framework.DomainModel.dll
+D:\Programming\GitHub\Framework\Framework.DomainModel\bin\Debug\Framework.DomainModel.pdb
+D:\Programming\GitHub\Framework\Framework.DomainModel\obj\Debug\Framework.DomainModel.csprojResolveAssemblyReference.cache
+D:\Programming\GitHub\Framework\Framework.DomainModel\obj\Debug\Framework.DomainModel.dll
+D:\Programming\GitHub\Framework\Framework.DomainModel\obj\Debug\Framework.DomainModel.pdb

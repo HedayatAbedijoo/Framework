@@ -1,0 +1,13 @@
+D:\Programming\OnionArchitectFramework\SuitSupply.Common\bin\Debug\Framework.Common.dll
+D:\Programming\OnionArchitectFramework\SuitSupply.Common\bin\Debug\Framework.Common.pdb
+D:\Programming\OnionArchitectFramework\SuitSupply.Common\obj\Debug\Framework.Common.dll
+D:\Programming\OnionArchitectFramework\SuitSupply.Common\obj\Debug\Framework.Common.pdb
+D:\Programming\OnionArchitectFramework\Framework.Common\bin\Debug\Framework.Common.dll
+D:\Programming\OnionArchitectFramework\Framework.Common\bin\Debug\Framework.Common.pdb
+D:\Programming\OnionArchitectFramework\Framework.Common\obj\Debug\Framework.Common.dll
+D:\Programming\OnionArchitectFramework\Framework.Common\obj\Debug\Framework.Common.pdb
+D:\Programming\GitHub\Framework\Framework.Common\bin\Debug\Framework.Common.dll
+D:\Programming\GitHub\Framework\Framework.Common\bin\Debug\Framework.Common.pdb
+D:\Programming\GitHub\Framework\Framework.Common\obj\Debug\Framework.Common.csprojResolveAssemblyReference.cache
+D:\Programming\GitHub\Framework\Framework.Common\obj\Debug\Framework.Common.dll
+D:\Programming\GitHub\Framework\Framework.Common\obj\Debug\Framework.Common.pdb

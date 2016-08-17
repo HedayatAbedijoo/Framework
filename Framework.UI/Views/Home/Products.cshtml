@@ -1,0 +1,91 @@
+﻿@Scripts.Render("~/js")
+@Styles.Render("~/css")
+
+<html ng-app="myApp">
+<head>
+    <title>Prodcut Simple CRUD</title>
+</head>
+<body>
+    <div ng-controller="productController" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="header">Prodcut Simple CRUD</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <strong class="error">{{error}}</strong>
+                <form name="addproduct" style="width: 600px; margin: 0px auto;">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name:</label>
+                        <div class="col-sm-10 space">
+                            <input type="text" class="form-control" id="name" placeholder="please enter your name" ng-model="newProduct.Name" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-sm-2 control-label">Price:</label>
+                        <div class="col-sm-10 space">
+                            <input type="number" class="form-control" id="price" placeholder="please enter your price" ng-model="newProduct.Price" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Photo" class="col-sm-2 control-label">Photo:</label>
+                        <div class="col-sm-10 space">
+                            <img width="100" height="100" id="Photo" ng-src="{{getImage(newProduct.PhotoUrl)}}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Photo" class="col-sm-2 control-label">Upload:</label>
+                        <div class="col-sm-10 space">
+                            <input type="file" ng-file-upload ng-model="file" file-upload multiple ng-disabled="!addproduct.$valid" />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="form-group space">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Add" ng-click="add()" ng-show="addShow" ng-disabled="!addproduct.$valid" class="btn btn-primary" />
+                            <input type="submit" value="Update" ng-click="update()" ng-show="updateShow" ng-disabled="!addproduct.$valid" class="btn btn-primary" />
+                            <input type="button" value="Cancel" ng-click="cancel()" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" style="width: 800px; margin-left: 170px;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Last Update</th>
+                            <th>Photo</th>
+                            <th></th>
+
+                        </tr>
+                        <tr ng-repeat="product in products">
+                            <td>
+                                <p>{{ product.Name }}</p>
+                            </td>
+                            <td>
+                                <p>{{ product.Price }}</p>
+                            </td>
+                            <td>
+                                <p>{{ product.LastUpdated }}</p>
+                            </td>
+                            <td>
+                                <p><img width="50px" height="50px" ng-src="{{product.PhotoUrl}}" /></p>
+                            </td>
+                            <td>
+                                <p><a ng-click="edit()" href="javascript:void(0);">Edit</a> | <a ng-click="delete()" href="javascript:void(0);">Delete</a></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
