@@ -104,34 +104,29 @@ namespace Framework.Service.Base
       return contract;
     }
 
-    //        public async Task<ServiceContract> SaveChangesAsync()
-    //        {
-    //            //Task<ServiceContract> contract = Task<ServiceContract>.Factory.StartNew(() =>
-    //            //{
-    //            //    return new ServiceContract();
-    //            //});
-    //            var contract = new ServiceContract();
-    //            try
-    //            {
-    //                await repository.SaveChangesAsync();
-    //                contract.Result = OperationResult.Success;
-    //            }
-    //            catch (Exception exp)
-    //            {
+    public async Task<ServiceContract> SaveChangesAsync()
+    {
+      var contract = new ServiceContract();
+      try
+      {
+        await repository.SaveChangesAsync();
+        contract.Result = OperationResult.Success;
+      }
+      catch (Exception exp)
+      {
+        contract.Result = OperationResult.Error;
+        contract.Exception = ServiceException.Factory(exp);
+      }
 
-    //                contract.Result = OperationResult.Error;
-    //                contract.Exception = ServiceException.Factory(exp);
-
-    //            }
-
-    //            return contract;
-    //;
-    //        }
+      return contract;
+     
+    }
 
     public void Dispose()
     {
       this.repository.Dispose();
     }
+
   }
 
   public abstract class ServiceBase

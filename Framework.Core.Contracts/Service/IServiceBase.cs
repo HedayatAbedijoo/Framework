@@ -20,7 +20,7 @@ namespace Framework.Core.Contracts.Service
     ServiceContract<long> Count(Expression<Func<T, bool>> whereCondition);
     ServiceContract<long> Count();
     ServiceContract SaveChanges();
-    //Task<ServiceContract> SaveChangesAsync();
+    Task<ServiceContract> SaveChangesAsync();
     ServiceContract<IQueryable<T>> GetAll(System.Linq.Expressions.Expression<Func<T, bool>> whereCondition);
     ServiceContract<IQueryable<T>> GetAll(params System.Linq.Expressions.Expression<Func<T, object>>[] includes);
 

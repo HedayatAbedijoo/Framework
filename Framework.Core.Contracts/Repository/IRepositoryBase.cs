@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+
 namespace Framework.Core.Contracts.Repository
 {
   public interface IRepositoryBase { }
@@ -21,6 +23,6 @@ namespace Framework.Core.Contracts.Repository
     void Update(T entity);
     int SaveChanges();
 
-    //Task<int> SaveChangesAsync();
+   Task<int> SaveChangesAsync();
   }
 }

@@ -91,7 +91,7 @@ namespace SiutSupply.Repository
       try
       {
         IQueryable<T> query = _dbSet;
-        return query.Where(whereCondition);        
+        return query.Where(whereCondition);
       }
       catch (Exception exp)
       {
@@ -153,7 +153,7 @@ namespace SiutSupply.Repository
     {
       try
       {
-        IQueryable<T> query = _dbSet;      
+        IQueryable<T> query = _dbSet;
         foreach (var include in includes)
         {
           query = query.Include(include);
@@ -170,11 +170,7 @@ namespace SiutSupply.Repository
         throw exp;
       }
     }
-   
-    //public Task<int> SaveChangesAsync()
-    //{
-    //    return Context.SaveChangesAsync();
-    //}
+
 
     #endregion
     private void RefreshEntity(T entity)
@@ -263,6 +259,44 @@ namespace SiutSupply.Repository
     public void Dispose()
     {
       this._context.Dispose();
+    }
+
+    public async Task<int> SaveChangesAsync()
+    {
+      try
+      {
+        var changes = getOriginalValues() + getCurrentValues();
+        var result = await Context.SaveChangesAsync();
+        if (log != null)
+          log.WriteLog(LogType.Informational, this.GetType().Name + "=>Save Changes", "", ExtraInfo: changes);
+        return result;
+
+      }
+      catch (DbEntityValidationException ex)
+      {
+        StringBuilder error = new StringBuilder();
+        foreach (var eve in ex.EntityValidationErrors)
+        {
+          foreach (var ve in eve.ValidationErrors)
+          {
+            error.AppendLine(string.Format("\"{0}\" : {1}" + Environment.NewLine,
+                ve.PropertyName, ve.ErrorMessage));
+          }
+        }
+        if (log != null)
+        {
+          log.WriteLog(LogType.Error, Message: error.ToString(), Event: this.GetType().Name + "=>Save Changes", ExtraInfo: getOriginalValues());
+        }
+        throw new Exception(error.ToString());
+      }
+      catch (Exception ex)
+      {
+        if (log != null)
+        {
+          log.WriteLog(LogType.Error, Message: ex.GetInnermostException(), Event: this.GetType().Name + "=>Save Changes", ExtraInfo: getOriginalValues());
+        }
+        throw ex;
+      }
     }
   }
 

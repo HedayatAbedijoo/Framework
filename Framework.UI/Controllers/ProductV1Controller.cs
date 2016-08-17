@@ -146,35 +146,12 @@ namespace Framework.UI.Controllers
     [RestParameter("id", "The product identifier.")]
     public async Task<IHttpActionResult> Delete(string id)
     {
+      var contract = await productService.DeleteById(id);
 
-      var contract = await Task<ServiceContract<Product>>.Factory.StartNew(() =>
-      {
-        return productService.GetSingle(i => i.Id == new Guid(id));
-      });
-
-      if (contract.Result == OperationResult.Error || contract.Item == null)
-      {
-        return NotFound();
-      }
+      if (contract.Result == OperationResult.Success)
+        return Ok();
       else
-      {
-        productService.Delete(contract.Item);
-
-        var saveContract = await Task<ServiceContract>.Factory.StartNew(() =>
-      {
-        return productService.SaveChanges();
-      });
-
-        if (saveContract.Result == OperationResult.Error)
-        {
-          return NotFound();
-        }
-        else
-        {
-          return Ok();
-        }
-
-      }
+        return NotFound();
     }
 
 

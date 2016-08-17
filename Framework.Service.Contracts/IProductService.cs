@@ -10,6 +10,6 @@ namespace Framework.Service.Contracts
 {
   public interface IProductService : IServiceBase<Product>
   {
-
+    Task<ServiceContract> DeleteById(string Id);
   }
 }
