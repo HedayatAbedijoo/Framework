@@ -119,7 +119,7 @@ namespace Framework.Service.Base
       }
 
       return contract;
-     
+
     }
 
     public void Dispose()
@@ -127,6 +127,61 @@ namespace Framework.Service.Base
       this.repository.Dispose();
     }
 
+    public async Task<ServiceContract<IEnumerable<T>>> GetAllAsync(Expression<Func<T, bool>> whereCondition)
+    {
+      var contract = new ServiceContract<IEnumerable<T>>();
+
+      try
+      {
+        contract.Item = await repository.GetAllAsyc(whereCondition);
+        contract.Result = OperationResult.Success;
+      }
+      catch (Exception exp)
+      {
+
+        contract.Result = OperationResult.Error;
+        contract.Message = exp.Message;
+      }
+
+      return contract;
+    }
+
+    public async Task<ServiceContract<IEnumerable<T>>> GetAllAsync(params Expression<Func<T, object>>[] includes)
+    {
+      var contract = new ServiceContract<IEnumerable<T>>();
+
+      try
+      {
+        contract.Item = await repository.GetAllAsyc(includes);
+        contract.Result = OperationResult.Success;
+      }
+      catch (Exception exp)
+      {
+
+        contract.Result = OperationResult.Error;
+        contract.Message = exp.Message;
+      }
+
+      return contract;
+    }
+
+    public async Task<ServiceContract<T>> GetSingleAsync(Expression<Func<T, bool>> whereCondition, params Expression<Func<T, object>>[] includes)
+    {
+      var contract = new ServiceContract<T>();
+
+      try
+      {
+        contract.Item = await repository.GetSingleAsync(whereCondition, includes);
+        contract.Result = OperationResult.Success;
+      }
+      catch (Exception exp)
+      {
+
+        contract.Result = OperationResult.Error;
+        contract.Message = exp.Message;
+      }
+      return contract;
+    }
   }
 
   public abstract class ServiceBase

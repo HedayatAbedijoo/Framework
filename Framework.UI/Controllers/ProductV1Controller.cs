@@ -39,7 +39,7 @@ namespace Framework.UI.Controllers
     public async Task<IHttpActionResult> Get()
     {
       var viewModel = new List<ProductViewModel>();
-      var contract = productService.GetAll();
+      var contract = await productService.GetAllAsync();
 
       if (contract.Result == OperationResult.Error)
       {
@@ -47,11 +47,7 @@ namespace Framework.UI.Controllers
       }
       else
       {
-        await Task.Factory.StartNew(() =>
-        {
-          viewModel = Mapping.CreateViewModels(contract.Item, Url);
-        });
-
+        viewModel = Mapping.CreateViewModels(contract.Item, Url);
         return Ok(viewModel);
       }
     }
@@ -63,7 +59,7 @@ namespace Framework.UI.Controllers
     {
       var viewModel = new ProductViewModel();
 
-      var contract = productService.GetSingle(i => i.Id == new Guid(id));
+      var contract = await productService.GetSingleAsync(i => i.Id == new Guid(id));
 
       if (contract.Result == OperationResult.Error)
       {
@@ -72,11 +68,7 @@ namespace Framework.UI.Controllers
       else
       {
         if (contract.Item == null) return NotFound();
-        await Task.Factory.StartNew(() =>
-        {
-          viewModel = Mapping.CreateViewModel(contract.Item, Url);
-        });
-
+        viewModel = Mapping.CreateViewModel(contract.Item, Url);
         return Ok(viewModel);
       }
     }

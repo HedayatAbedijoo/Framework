@@ -42,8 +42,6 @@ namespace SiutSupply.Repository
       this.log = log;
       _dbSet = _context.Set<T>();
     }
-
-    #region IRepository<T> Members
     public T GetSingle(System.Linq.Expressions.Expression<Func<T, bool>> whereCondition, params System.Linq.Expressions.Expression<Func<T, object>>[] includes)
     {
       try
@@ -171,8 +169,6 @@ namespace SiutSupply.Repository
       }
     }
 
-
-    #endregion
     private void RefreshEntity(T entity)
     {
       if (entity != null)
@@ -296,6 +292,70 @@ namespace SiutSupply.Repository
           log.WriteLog(LogType.Error, Message: ex.GetInnermostException(), Event: this.GetType().Name + "=>Save Changes", ExtraInfo: getOriginalValues());
         }
         throw ex;
+      }
+    }
+
+    public async Task<IEnumerable<T>> GetAllAsyc(Expression<Func<T, bool>> whereCondition)
+    {
+      try
+      {
+        IQueryable<T> query = _dbSet;
+        return await query.Where(whereCondition).ToListAsync();
+      }
+      catch (Exception exp)
+      {
+
+        if (log != null)
+        {
+          log.WriteLog(LogType.Emergency, Message: exp.GetInnermostException(), Event: this.GetType().Name + "=>GetAll", ExtraInfo: getOriginalValues());
+        }
+        throw exp;
+      }
+    }
+
+    public async Task<IEnumerable<T>> GetAllAsyc(params Expression<Func<T, object>>[] includes)
+    {
+      try
+      {
+        IQueryable<T> query = _dbSet;
+        foreach (var include in includes)
+        {
+          query = query.Include(include);
+        }
+        return await query.ToListAsync();
+      }
+      catch (Exception exp)
+      {
+
+        if (log != null)
+        {
+          log.WriteLog(LogType.Emergency, Message: exp.GetInnermostException(), Event: this.GetType().Name + "=>GetAll", ExtraInfo: getOriginalValues());
+        }
+        throw exp;
+      }
+    }
+
+    public async Task<T> GetSingleAsync(Expression<Func<T, bool>> whereCondition, params Expression<Func<T, object>>[] includes)
+    {
+      try
+      {
+        IQueryable<T> query = _dbSet;
+        if (includes != null && includes.Any())
+        {
+          query = includes.Aggregate(query, (current, include) => current.Include(include));
+        }
+        var entity = await query.FirstOrDefaultAsync(whereCondition);
+        RefreshEntity(entity);
+        return entity;
+      }
+      catch (Exception exp)
+      {
+
+        if (log != null)
+        {
+          log.WriteLog(LogType.Emergency, Message: exp.GetInnermostException(), Event: this.GetType().Name + "=>GetSingle", ExtraInfo: getOriginalValues());
+        }
+        throw exp;
       }
     }
   }
