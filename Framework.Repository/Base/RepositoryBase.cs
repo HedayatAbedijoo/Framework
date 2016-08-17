@@ -261,7 +261,7 @@ namespace SiutSupply.Repository
     {
       try
       {
-        var changes = getOriginalValues() + getCurrentValues();
+        var changes = getOriginalValues() + getCurrentValues(); // Just to show auditing is working. It is enough to have auditing on exception block.
         var result = await Context.SaveChangesAsync();
         if (log != null)
           log.WriteLog(LogType.Informational, this.GetType().Name + "=>Save Changes", "", ExtraInfo: changes);

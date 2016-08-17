@@ -86,12 +86,7 @@ namespace Framework.UI.Controllers
       }
       var newProduct = Mapping.CreateProduct(value);
       productService.Create(newProduct);
-
-      var saveContract = await Task<ServiceContract>.Factory.StartNew(() =>
-      {
-        return productService.SaveChanges();
-      });
-
+      var saveContract = await productService.SaveChangesAsync();
       if (saveContract.Result == OperationResult.Error)
         return StatusCode(HttpStatusCode.InternalServerError);
       else
@@ -107,31 +102,12 @@ namespace Framework.UI.Controllers
       Validate<ProductViewModel>(value);
       if (!ModelState.IsValid) return StatusCode(HttpStatusCode.BadRequest);
 
-      var item = await Task<Product>.Factory.StartNew(() =>
-      {
-        return productService.GetSingle(i => i.Id == value.Id).Item;
-      });
+      var result = await productService.UpdateProduct(value.Id, value.Name, value.Price, value.Photo, value.RowVersion);
 
-      if (item == null) return StatusCode(HttpStatusCode.BadRequest);
-      if (Convert.ToBase64String(item.RowVersion) != value.RowVersion)
+      if (result.Result == OperationResult.Error)
         return StatusCode(HttpStatusCode.BadRequest);
-
-      Mapping.UpdateProduct(item, value);
-      productService.Update(item);
-
-      var contract = await Task<ServiceContract>.Factory.StartNew(() =>
-      {
-        return productService.SaveChanges();
-      });
-
-      if (contract.Result == OperationResult.Success)
-      {
-        return Ok();
-      }
       else
-      {
-        return StatusCode(HttpStatusCode.InternalServerError);
-      }
+        return Ok();
     }
 
     [Description("Removes a product.")]

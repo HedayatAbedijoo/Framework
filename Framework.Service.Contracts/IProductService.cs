@@ -11,5 +11,7 @@ namespace Framework.Service.Contracts
   public interface IProductService : IServiceBase<Product>
   {
     Task<ServiceContract> DeleteById(string Id);
+    Task<ServiceContract> UpdateProduct(Guid Id, string Name, decimal Price, string Photo, string rowVersion);
+
   }
 }

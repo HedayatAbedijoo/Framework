@@ -75,6 +75,46 @@ namespace Framework.Service
       return base.Update(entity);
     }
 
+    public async Task<ServiceContract> UpdateProduct(Guid Id, string Name, decimal Price, string Photo, string rowVersion)
+    {
+      var contract = new ServiceContract();
+
+
+      var item = await repository.GetSingleAsync(i => i.Id == Id);
+      if (item == null)
+      {
+        contract.Result = OperationResult.Error;
+      }
+      else
+      {
+        // Do Business rules
+        if (Convert.ToBase64String(item.RowVersion) != rowVersion)
+        {
+          contract.Result = OperationResult.Error;
+        }
+        else
+        {
+          item.Name = Name;
+          item.Price = Price;
+          item.Photo = Photo;
+          item.LastUpdated = DateTime.Now;
+          repository.Update(item);
+          try
+          {
+            await repository.SaveChangesAsync();
+            contract.Result = OperationResult.Success;
+          }
+          catch (Exception exp)
+          {
+            contract.Result = OperationResult.Error;
+            contract.Message = exp.Message;
+          }
+        }
+      }
+
+
+      return contract;
+    }
 
   }
 }
