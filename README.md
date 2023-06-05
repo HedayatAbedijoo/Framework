@@ -1,4 +1,4 @@
-# Onion Architect Framework
+# Clean Architect Framework
    using EntityFramework, MEF
 
 # Goldenflat implemented with this framework
